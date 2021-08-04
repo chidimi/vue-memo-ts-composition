@@ -1,6 +1,6 @@
 <template>
   <ul v-for="memo in memos" :key="memo.id">
-    <li>
+    <li @click="onClickMemo(memo.id)">
       <MemoItem :memo="memo"/>
     </li>
   </ul>
@@ -25,13 +25,18 @@ export default defineComponent({
       type: Object as PropType<Memo[]>
     }
   },
-  setup(props) {
+  setup(props, context) {
     const state = reactive<State>({
       memos: props.memos
     })
 
+    const onClickMemo = (id: string) => {
+      context.emit('edit', id)
+    }
+
     return {
-      state
+      state,
+      onClickMemo
     }
   },
 })

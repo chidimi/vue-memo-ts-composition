@@ -1,7 +1,14 @@
 <template>
   <form>
-    <textarea>
-    </textarea>
+    <div>
+      <label>タイトル</label>
+      <input type="text">
+    </div>
+    <div>
+      <label>内容</label>
+      <textarea>
+      </textarea>
+    </div>
     <button>
     </button>
     <button>

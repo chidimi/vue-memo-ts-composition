@@ -14,7 +14,7 @@ import MemoList from './components/MemoList.vue'
 import MemoForm from './components/MemoForm.vue'
 
 interface State {
-  memos: Memo[] | undefined;
+  memos: Memo[];
 }
 
 export default defineComponent({

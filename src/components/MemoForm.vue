@@ -1,5 +1,4 @@
 <template>
-  <form>
     <div>
       <label>タイトル</label>
       <input type="text" v-model="state.editingMemo.title">
@@ -9,16 +8,15 @@
       <textarea v-model="state.editingMemo.content">
       </textarea>
     </div>
-    <button>
-    </button>
-    <button>
-    </button>
-  </form>
+    <SaveButton @save="saveMemo" />
+    <DeleteButton @deleteValue="deleteMemo" />
 </template>
 
 <script lang="ts">
 import { defineComponent, onUpdated, PropType, reactive } from 'vue'
 import Memo from '../type/Memo'
+import SaveButton from './SaveButton.vue'
+import DeleteButton from './DeleteButton.vue'
 
 interface State {
   editingMemo: Memo | undefined;
@@ -26,12 +24,18 @@ interface State {
 
 
 export default defineComponent({
+  name: 'MemoForm',
+  components: {
+    SaveButton,
+    DeleteButton,
+  },
   props: {
     editingMemo: {
       type: Object as PropType<Memo>
     }
   },
-  setup(props) {
+  emits: ['save', 'deleteValue'],
+  setup(props, context) {
     const state = reactive<State>({
       editingMemo: props.editingMemo
     })
@@ -40,8 +44,18 @@ export default defineComponent({
       state.editingMemo = props.editingMemo
     })
 
+    const saveMemo = () => {
+      context.emit('save', state.editingMemo)
+    }
+
+    const deleteMemo = () => {
+      context.emit('deleteValue', state.editingMemo)
+    }
+
     return {
-      state
+      state,
+      saveMemo,
+      deleteMemo
     }
   },
 })

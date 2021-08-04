@@ -1,7 +1,7 @@
 <template>
   <Header title="メモアプリ"/>
   <MemoList @editMemo="editMemo" :memos="state.memos"/>
-  <MemoForm v-if="state.editingMemo != null" :editingMemo="state.editingMemo"/>
+  <MemoForm @save="saveMemo" @deleteValue="deleteMemo" v-if="state.editingMemo != null" :editingMemo="state.editingMemo"/>
   <Footer />
 </template>
 
@@ -43,9 +43,15 @@ export default defineComponent({
       state.editingMemo = state.memos.find(memo => id === memo.id)
     }
 
+    const saveMemo = (editingMemo: Memo) => {
+      state.memos = state.memos.filter((memo) => memo.id !== editingMemo.id)
+      state.memos = [...state.memos, editingMemo]
+    }
+
     return {
       state,
       editMemo,
+      saveMemo
     }
   }
 });

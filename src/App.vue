@@ -1,7 +1,7 @@
 <template>
   <Header title="メモアプリ"/>
-  <MemoList :memos="state.memos"/>
-  <MemoForm />
+  <MemoList @editMemo="editMemo" :memos="state.memos"/>
+  <MemoForm v-if="state.editingMemo != null" :editingMemo="state.editingMemo"/>
   <Footer />
 </template>
 
@@ -15,6 +15,7 @@ import MemoForm from './components/MemoForm.vue'
 
 interface State {
   memos: Memo[];
+  editingMemo: Memo | undefined;
 }
 
 export default defineComponent({
@@ -27,7 +28,8 @@ export default defineComponent({
   },
   setup() {
     const state = reactive<State>({
-      memos: []
+      memos: [],
+      editingMemo: undefined,
     })
 
     onMounted(() => {
@@ -37,12 +39,18 @@ export default defineComponent({
       ]
     })
 
+    const editMemo = (id: number) => {
+      state.editingMemo = state.memos.find(memo => id === memo.id)
+    }
+
     return {
-      state
+      state,
+      editMemo,
     }
   }
 });
 </script>
 
 <style>
+
 </style>

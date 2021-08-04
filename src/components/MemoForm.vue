@@ -2,11 +2,11 @@
   <form>
     <div>
       <label>タイトル</label>
-      <input type="text">
+      <input type="text" v-model="state.editingMemo.title">
     </div>
     <div>
       <label>内容</label>
-      <textarea>
+      <textarea v-model="state.editingMemo.content">
       </textarea>
     </div>
     <button>
@@ -17,23 +17,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue'
+import { defineComponent, onUpdated, PropType, reactive } from 'vue'
 import Memo from '../type/Memo'
 
 interface State {
-  memo: Memo | undefined;
+  editingMemo: Memo | undefined;
 }
 
 
 export default defineComponent({
   props: {
-    memo: {
+    editingMemo: {
       type: Object as PropType<Memo>
     }
   },
   setup(props) {
     const state = reactive<State>({
-      memo: props.memo
+      editingMemo: props.editingMemo
+    })
+
+    onUpdated(() => {
+      state.editingMemo = props.editingMemo
     })
 
     return {

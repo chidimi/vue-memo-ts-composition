@@ -1,7 +1,6 @@
 <template>
   <div>
-    {{memo.id}}
-    {{memo.title}}
+    <a href="javascript:void(0)" @click="onClickMemo(memo.id)">{{memo.title}}</a>
   </div>
 </template>
 
@@ -15,9 +14,14 @@ export default defineComponent({
       type: Object as PropType<Memo>
     }
   },
-  setup() {
-    return {
+  emits: ['editMemo'],
+  setup(props, context) {
+    const onClickMemo = (id: number) => {
+      context.emit('editMemo', id)
+    }
 
+    return {
+      onClickMemo
     }
   },
 })

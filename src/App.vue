@@ -1,16 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
+  <Header />
+  <MemoList />
+  <MemoForm />
+  <Footer />
   <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { defineComponent, onMounted, reactive } from 'vue';
+import { Memo } from './type/Memo'
+
+interface State {
+  memos: Memo[];
+}
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    Header,
+    MemoList,
+    MemoForm,
+    Footer,
+  },
+  setup() {
+    const state = reactive<State>({
+      memos: []
+    })
+
+    onMounted(() => {
+      state.memos = [
+        {id: 1, title: 'memo1', content: '牛乳を買う'},
+        {id: 2, title: 'memo2', content: '卵を買う'},
+      ]
+    })
+
+    return {
+      state
+    }
   }
 });
 </script>

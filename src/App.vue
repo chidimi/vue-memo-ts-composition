@@ -1,17 +1,20 @@
 <template>
-  <Header />
-  <MemoList />
+  <Header title="メモアプリ"/>
+  <MemoList :memos="state.memos"/>
   <MemoForm />
   <Footer />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from 'vue';
-import { Memo } from './type/Memo'
+import Memo from './type/Memo'
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+import MemoList from './components/MemoList.vue'
+import MemoForm from './components/MemoForm.vue'
 
 interface State {
-  memos: Memo[];
+  memos: Memo[] | undefined;
 }
 
 export default defineComponent({
@@ -42,12 +45,4 @@ export default defineComponent({
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

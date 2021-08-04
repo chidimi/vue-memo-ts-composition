@@ -1,5 +1,5 @@
-export type Memo = {
+export default interface Memo {
   id: number,
   title: string,
   content: string,
-};
+}

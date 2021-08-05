@@ -37,7 +37,6 @@ export default defineComponent({
       context.emit('editMemo', id)
     }
     const addMemo = () => {
-      console.log('add')
       context.emit('add')
     }
 

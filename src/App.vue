@@ -1,13 +1,13 @@
 <template>
   <Header title="メモアプリ"/>
-  <MemoList @editMemo="editMemo" :memos="state.memos"/>
+  <MemoList @add="addMemo" @editMemo="editMemo" :memos="state.memos"/>
   <MemoForm @save="saveMemo" @deleteValue="deleteMemo" v-if="state.editingMemo != null" :editingMemo="state.editingMemo"/>
   <Footer />
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from 'vue';
-import Memo from './type/Memo'
+import Memo from './types/Memo'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import MemoList from './components/MemoList.vue'
@@ -40,18 +40,35 @@ export default defineComponent({
     })
 
     const editMemo = (id: number) => {
-      state.editingMemo = state.memos.find(memo => id === memo.id)
+      const targetMemo = state.memos.find(memo => id === memo.id)
+      state.editingMemo = Object.assign({}, targetMemo)
     }
 
     const saveMemo = (editingMemo: Memo) => {
       state.memos = state.memos.filter((memo) => memo.id !== editingMemo.id)
-      state.memos = [...state.memos, editingMemo]
+      state.memos = [...state.memos, Object.assign({}, editingMemo)]
     }
+
+    const addMemo = () => {
+      const NEW_MEMO_TITLE = '新しいメモ'
+
+      const newMemo: Memo = {id: 100, title: NEW_MEMO_TITLE, content: ''}
+      state.memos = [...state.memos, Object.assign({}, newMemo)]
+      state.editingMemo = newMemo
+    }
+
+    const deleteMemo = (editingMemo: Memo) => {
+      state.memos = state.memos.filter(memo => editingMemo.id !== memo.id)
+      state.editingMemo = undefined
+    }
+
 
     return {
       state,
       editMemo,
-      saveMemo
+      saveMemo,
+      addMemo,
+      deleteMemo
     }
   }
 });

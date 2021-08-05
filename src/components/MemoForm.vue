@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { defineComponent, onUpdated, PropType, reactive } from 'vue'
-import Memo from '../type/Memo'
+import Memo from '../types/Memo'
 import SaveButton from './SaveButton.vue'
 import DeleteButton from './DeleteButton.vue'
 

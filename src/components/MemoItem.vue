@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import Memo from '../type/Memo'
+import Memo from '../types/Memo'
 
 export default defineComponent({
   props: {

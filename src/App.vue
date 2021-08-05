@@ -47,8 +47,13 @@ export default defineComponent({
     }
 
     const saveMemo = (editingMemo: Memo) => {
-      state.memos = state.memos.filter((memo) => memo.id !== editingMemo.id)
-      state.memos = [...state.memos, Object.assign({}, editingMemo)]
+      state.memos = state.memos.map(memo => {
+        if (memo.id === editingMemo.id) {
+          return Object.assign({}, state.editingMemo)
+        } else {
+          return memo
+        }
+      })
     }
 
     const addMemo = () => {

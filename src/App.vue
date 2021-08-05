@@ -64,6 +64,7 @@ export default defineComponent({
 
     const numbering = () :number => {
       const memos = state.memos
+      if (memos.length === 0) return 1
       return Math.max(...memos.map(memo => memo.id))
     }
 

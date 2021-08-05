@@ -6,12 +6,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from 'vue';
+import { defineComponent, onMounted, reactive, watch } from 'vue';
 import Memo from './types/Memo'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import MemoList from './components/MemoList.vue'
 import MemoForm from './components/MemoForm.vue'
+import memoStorage from './localstorage'
 
 interface State {
   memos: Memo[];
@@ -33,10 +34,11 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      state.memos = [
-        {id: 1, title: 'memo1', content: '牛乳を買う'},
-        {id: 2, title: 'memo2', content: '卵を買う'},
-      ]
+      state.memos = memoStorage.fetch()
+    })
+
+    watch(() => state.memos, () => {
+      memoStorage.save(state.memos)
     })
 
     const editMemo = (id: number) => {

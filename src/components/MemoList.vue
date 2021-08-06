@@ -1,5 +1,6 @@
 <template>
-  <ul v-for="memo in memos" :key="memo.id">
+  <ul class="list-item"
+  v-for="memo in memos" :key="memo.id">
     <li>
       <MemoItem @editMemo="onClickMemo" :memo="memo"/>
     </li>

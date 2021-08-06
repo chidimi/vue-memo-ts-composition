@@ -1,6 +1,6 @@
 <template>
-  <footer>
-    <small>copyright © 2021 chidimi</small>
+  <footer class="text-center bg-gray-200 sticky bottom-0 ">
+    <small class="italic">copyright © 2021 chidimi</small>
   </footer>
 </template>
 

@@ -1,8 +1,12 @@
 <template>
-  <MemoHeader title="メモアプリ"/>
-  <MemoList @add="addMemo" @editMemo="editMemo" :memos="state.memos"/>
-  <MemoForm @save="saveMemo" @deleteValue="deleteMemo" v-if="state.editingMemo !== undefined" :editingMemo="state.editingMemo"/>
-  <MemoFooter />
+  <div class="flex flex-col h-screen">
+    <MemoHeader title="メモアプリ"/>
+    <div class="flex-grow">
+      <MemoList @add="addMemo" @editMemo="editMemo" :memos="state.memos"/>
+      <MemoForm @save="saveMemo" @deleteValue="deleteMemo" v-if="state.editingMemo !== undefined" :editingMemo="state.editingMemo"/>
+    </div>
+    <MemoFooter />
+  </div>
 </template>
 
 <script lang="ts">

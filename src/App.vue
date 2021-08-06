@@ -49,7 +49,7 @@ export default defineComponent({
     const saveMemo = (editingMemo: Memo) => {
       state.memos = state.memos.map(memo => {
         if (memo.id === editingMemo.id) {
-          return Object.assign({}, state.editingMemo)
+          return Object.assign({}, editingMemo)
         } else {
           return memo
         }

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "Header",
+  name: "MemoHeader",
   props: ['title'],
 };
 </script>

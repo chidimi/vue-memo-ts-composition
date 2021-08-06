@@ -1,15 +1,15 @@
 <template>
-  <Header title="メモアプリ"/>
+  <MemoHeader title="メモアプリ"/>
   <MemoList @add="addMemo" @editMemo="editMemo" :memos="state.memos"/>
   <MemoForm @save="saveMemo" @deleteValue="deleteMemo" v-if="state.editingMemo !== undefined" :editingMemo="state.editingMemo"/>
-  <Footer />
+  <MemoFooter />
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, watch } from 'vue';
 import Memo from './types/Memo'
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+import MemoHeader from './components/MemoHeader.vue'
+import MemoFooter from './components/MemoFooter.vue'
 import MemoList from './components/MemoList.vue'
 import MemoForm from './components/MemoForm.vue'
 import memoStorage from './localstorage'
@@ -22,10 +22,10 @@ interface State {
 export default defineComponent({
   name: 'App',
   components: {
-    Header,
+    MemoHeader,
     MemoList,
     MemoForm,
-    Footer,
+    MemoFooter,
   },
   setup() {
     const state = reactive<State>({

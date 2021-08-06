@@ -1,5 +1,5 @@
 <template>
-  <button @click="add">+</button>
+  <button @click="add">新規追加</button>
 </template>
 
 <script lang="ts">

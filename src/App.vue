@@ -2,7 +2,7 @@
   <div class="flex flex-col h-screen">
     <MemoHeader title="メモアプリ"/>
     <div class="flex-grow">
-      <MemoList @add="addMemo" @editMemo="editMemo" :memos="state.memos"/>
+      <MemoList @delete="deleteAll" @add="addMemo" @editMemo="editMemo" :memos="state.memos"/>
       <MemoForm @save="saveMemo" @deleteValue="deleteMemo" v-if="state.editingMemo !== undefined" :editingMemo="state.editingMemo"/>
     </div>
     <MemoFooter />
@@ -73,6 +73,13 @@ export default defineComponent({
       state.editingMemo = undefined
     }
 
+    const deleteAll = () => {
+      if (window.confirm('本当にすべて削除しますか?')) {
+        state.memos = []
+        state.editingMemo = undefined
+      }
+    }
+
     const numbering = () :number => {
       if (state.memos.length === 0) return 1
       return Math.max(...state.memos.map(memo => memo.id))
@@ -83,7 +90,8 @@ export default defineComponent({
       editMemo,
       saveMemo,
       addMemo,
-      deleteMemo
+      deleteMemo,
+      deleteAll
     }
   }
 });

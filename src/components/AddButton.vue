@@ -1,5 +1,5 @@
 <template>
-  <button @click="add">新規追加</button>
+  <button class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="add">新規追加</button>
 </template>
 
 <script lang="ts">

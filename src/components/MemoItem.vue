@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <a href="javascript:void(0)" @click="onClickMemo(memo.id)">{{memo.title}}</a>
-  </div>
+  <a class="no-underline hover:underline text-blue-400" href="javascript:void(0)" @click="onClickMemo(memo.id)">{{memo.title}}</a>
 </template>
 
 <script lang="ts">

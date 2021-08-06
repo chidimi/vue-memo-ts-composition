@@ -1,15 +1,18 @@
 <template>
-    <div>
-      <label>タイトル</label>
-      <input type="text" v-model="state.editingMemo.title">
+    <div class="grid-cols-3">
+        <label class="block m-4">タイトル</label>
+        <input type="text"
+        class="mt-1 block m-4 w-80 rounded-md border-gray-300 shadow-sm focus:border-indigo-300
+              focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        v-model="state.editingMemo.title">
+        <span class="block ml-4">内容</span>
+        <textarea class="m-4 w-80 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 
+                        focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        v-model="state.editingMemo.content">
+        </textarea>
     </div>
-    <div>
-      <label>内容</label>
-      <textarea v-model="state.editingMemo.content">
-      </textarea>
-    </div>
-    <SaveButton @save="saveMemo" />
-    <DeleteButton @deleteValue="deleteMemo" />
+      <SaveButton class="ml-6" @save="saveMemo" />
+      <DeleteButton buttonName="削除" @deleteValue="deleteMemo" />
 </template>
 
 <script lang="ts">

@@ -1,7 +1,7 @@
 <template>
   <Header title="メモアプリ"/>
   <MemoList @add="addMemo" @editMemo="editMemo" :memos="state.memos"/>
-  <MemoForm @save="saveMemo" @deleteValue="deleteMemo" v-if="state.editingMemo != null" :editingMemo="state.editingMemo"/>
+  <MemoForm @save="saveMemo" @deleteValue="deleteMemo" v-if="state.editingMemo !== undefined" :editingMemo="state.editingMemo"/>
   <Footer />
 </template>
 
@@ -70,9 +70,8 @@ export default defineComponent({
     }
 
     const numbering = () :number => {
-      const memos = state.memos
-      if (memos.length === 0) return 1
-      return Math.max(...memos.map(memo => memo.id))
+      if (state.memos.length === 0) return 1
+      return Math.max(...state.memos.map(memo => memo.id))
     }
 
     return {

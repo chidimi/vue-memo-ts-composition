@@ -22,7 +22,6 @@ interface State {
   editingMemo: Memo | undefined;
 }
 
-
 export default defineComponent({
   name: 'MemoForm',
   components: {

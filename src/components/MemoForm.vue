@@ -1,7 +1,7 @@
 <template>
     <div class="grid-cols-3">
         <label class="block m-4">タイトル</label>
-        <input type="text"
+        <input v-focus type="text"
         class="mt-1 block m-4 w-80 rounded-md border-gray-300 shadow-sm focus:border-indigo-300
               focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         v-model="state.editingMemo.title">
@@ -36,6 +36,17 @@ export default defineComponent({
       type: Object as PropType<Memo>
     }
   },
+  directives: {
+    focus: {
+    // ディレクティブの定義
+    mounted(el) {
+      el.focus()
+    },
+    updated(el) {
+      el.focus()
+      }
+    }
+  },
   emits: ['save', 'deleteValue'],
   setup(props, context) {
     const state = reactive<State>({
@@ -57,7 +68,7 @@ export default defineComponent({
     return {
       state,
       saveMemo,
-      deleteMemo
+      deleteMemo,
     }
   },
 })

@@ -62,8 +62,10 @@ export default defineComponent({
 
     const addMemo = () => {
       const NEW_MEMO_TITLE = '新しいメモ'
-      const newId = numbering() + 1
-      const newMemo: Memo = {id: newId, title: NEW_MEMO_TITLE, content: ''}
+      const newId = numbering()
+      const newTitle = NEW_MEMO_TITLE + newId
+
+      const newMemo: Memo = {id: newId, title: newTitle, content: ''}
       state.memos = [...state.memos, Object.assign({}, newMemo)]
       state.editingMemo = newMemo
     }
@@ -82,7 +84,7 @@ export default defineComponent({
 
     const numbering = () :number => {
       if (state.memos.length === 0) return 1
-      return Math.max(...state.memos.map(memo => memo.id))
+      return Math.max(...state.memos.map(memo => memo.id)) + 1
     }
 
     return {

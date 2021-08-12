@@ -58,6 +58,7 @@ export default defineComponent({
           return memo
         }
       })
+      state.editingMemo = undefined
     }
 
     const addMemo = () => {

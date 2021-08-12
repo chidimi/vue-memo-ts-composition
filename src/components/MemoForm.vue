@@ -39,12 +39,9 @@ export default defineComponent({
   directives: {
     focus: {
     // ディレクティブの定義
-    mounted(el) {
-      el.focus()
-    },
-    updated(el) {
-      el.focus()
-      }
+      mounted(el) {
+        el.focus()
+      },
     }
   },
   emits: ['save', 'deleteValue'],

@@ -1,27 +1,102 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="flex flex-col h-screen">
+    <MemoHeader title="メモアプリ"/>
+    <div class="flex-grow">
+      <MemoList @delete="deleteAll" @add="addMemo" @editMemo="editMemo" :memos="state.memos"/>
+      <MemoForm @save="saveMemo" @deleteValue="deleteMemo" v-if="state.editingMemo !== undefined" :editingMemo="state.editingMemo"/>
+    </div>
+    <MemoFooter />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { defineComponent, onMounted, reactive, watch } from 'vue';
+import Memo from './types/Memo'
+import MemoHeader from './components/MemoHeader.vue'
+import MemoFooter from './components/MemoFooter.vue'
+import MemoList from './components/MemoList.vue'
+import MemoForm from './components/MemoForm.vue'
+import memoStorage from './localstorage'
+
+interface State {
+  memos: Memo[];
+  editingMemo: Memo | undefined;
+}
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
+    MemoHeader,
+    MemoList,
+    MemoForm,
+    MemoFooter,
+  },
+  setup() {
+    const state = reactive<State>({
+      memos: [],
+      editingMemo: undefined,
+    })
+
+    onMounted(() => {
+      state.memos = memoStorage.fetch()
+    })
+
+    watch(() => state.memos, () => {
+      memoStorage.save(state.memos)
+    })
+
+    const editMemo = (id: number) => {
+      const targetMemo = state.memos.find(memo => id === memo.id)
+      state.editingMemo = Object.assign({}, targetMemo)
+    }
+
+    const saveMemo = (editingMemo: Memo) => {
+      state.memos = state.memos.map(memo => {
+        if (memo.id === editingMemo.id) {
+          return Object.assign({}, editingMemo)
+        } else {
+          return memo
+        }
+      })
+      state.editingMemo = undefined
+    }
+
+    const addMemo = () => {
+      const NEW_MEMO_TITLE = '新しいメモ'
+      const newId = numbering()
+      const newTitle = NEW_MEMO_TITLE + newId
+
+      const newMemo: Memo = {id: newId, title: newTitle, content: ''}
+      state.memos = [...state.memos, Object.assign({}, newMemo)]
+      state.editingMemo = newMemo
+    }
+
+    const deleteMemo = (editingMemo: Memo) => {
+      state.memos = state.memos.filter(memo => editingMemo.id !== memo.id)
+      state.editingMemo = undefined
+    }
+
+    const deleteAll = () => {
+      if (window.confirm('本当にすべて削除しますか?')) {
+        state.memos = []
+        state.editingMemo = undefined
+      }
+    }
+
+    const numbering = () :number => {
+      if (state.memos.length === 0) return 1
+      return Math.max(...state.memos.map(memo => memo.id)) + 1
+    }
+
+    return {
+      state,
+      editMemo,
+      saveMemo,
+      addMemo,
+      deleteMemo,
+      deleteAll
+    }
   }
 });
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

@@ -1,7 +1,7 @@
 <template>
     <div class="grid-cols-3">
         <label class="block m-4">タイトル</label>
-        <input v-focus type="text"
+        <input v-focus ref="titleForm" type="text"
         class="mt-1 block m-4 w-80 rounded-md border-gray-300 shadow-sm focus:border-indigo-300
               focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         v-model="state.editingMemo.title">
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onUpdated, PropType, reactive } from 'vue'
+import { defineComponent, onUpdated, PropType, reactive, ref, watch } from 'vue'
 import Memo from '../types/Memo'
 import SaveButton from './SaveButton.vue'
 import DeleteButton from './DeleteButton.vue'
@@ -46,8 +46,13 @@ export default defineComponent({
   },
   emits: ['save', 'deleteValue'],
   setup(props, context) {
+    const titleForm = ref<HTMLInputElement>();
     const state = reactive<State>({
       editingMemo: props.editingMemo
+    })
+
+    watch(() => props.editingMemo, () =>  {
+      titleForm.value?.focus()
     })
 
     onUpdated(() => {
@@ -66,6 +71,7 @@ export default defineComponent({
       state,
       saveMemo,
       deleteMemo,
+      titleForm
     }
   },
 })
